@@ -8,7 +8,12 @@ import CubeScene from './scene/CubeScene';
 
 const scene = new CubeScene();
 
-ReactDOM.render(<SceneContext.Provider value={scene}><App /></SceneContext.Provider>, document.getElementById('root'));
+ReactDOM.render(
+  <SceneContext.Provider value={scene}>
+    <App />
+  </SceneContext.Provider>,
+  document.getElementById('root')
+);
 
 function animate() {
   requestAnimationFrame(animate);
