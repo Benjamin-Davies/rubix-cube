@@ -2,19 +2,20 @@ import {
   Scene,
   PerspectiveCamera,
   WebGLRenderer,
-  Color,
   BoxGeometry,
-  MeshBasicMaterial,
-  Mesh
+  Mesh,
+  MeshNormalMaterial,
+  Camera
 } from 'three';
 import { render } from 'react-dom';
 
 class Viewport {
   canvas: HTMLCanvasElement;
   scene: Scene;
-  camera: PerspectiveCamera;
+  camera: Camera;
   renderer: WebGLRenderer;
   cube: Mesh;
+  resizeHandler: void;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -22,25 +23,38 @@ class Viewport {
     this.scene = new Scene();
 
     const geometry = new BoxGeometry(1, 1, 1);
-    const material = new MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new MeshNormalMaterial();
     this.cube = new Mesh(geometry, material);
     this.scene.add(this.cube);
 
+    this.camera = new Camera();
+
+    this.renderer = new WebGLRenderer({ canvas });
+
+    window.addEventListener('resize', this.windowResized)
+    this.windowResized();
+
+    requestAnimationFrame(this.animate);
+  }
+
+  private windowResized = () => {
+    const width = window.innerWidth, height = window.innerHeight;
+
+    this.canvas.width = width;
+    this.canvas.height = height;
+
+    this.renderer.setViewport(0, 0, width, height);
+
     this.camera = new PerspectiveCamera(
-      75,
-      canvas.width / canvas.height,
+      40,
+      width / height,
       0.1,
       1000
     );
     this.camera.position.z = 5;
-
-    this.renderer = new WebGLRenderer({ canvas });
-
-    this.animate = this.animate.bind(this);
-    requestAnimationFrame(this.animate);
   }
 
-  private animate() {
+  private animate = () => {
     requestAnimationFrame(this.animate);
 
     this.cube.rotation.x += 0.01;
@@ -50,7 +64,8 @@ class Viewport {
   }
 
   destroy() {
-    this.animate = () => {};
+    window.removeEventListener('resize', this.windowResized);
+    this.animate = () => { };
   }
 }
 
