@@ -1,20 +1,19 @@
-import { Scene, BoxGeometry, MeshNormalMaterial, Mesh } from "three";
+import { Scene, Object3D } from 'three';
+import Cube from './Cube';
 
 class CubeScene extends Scene {
-  box: Mesh;
+  cube: Object3D;
 
   constructor() {
     super();
 
-    const geometry = new BoxGeometry();
-    const material = new MeshNormalMaterial();
-    this.box = new Mesh(geometry, material);
-    this.add(this.box);
+    this.cube = new Cube();
+    this.add(this.cube);
   }
 
   animate() {
-    this.box.rotation.x += 0.01;
-    this.box.rotation.y += 0.01;
+    this.cube.rotation.x += 0.02;
+    this.cube.rotation.y += 0.01;
   }
 }
 
