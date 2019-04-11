@@ -4,7 +4,6 @@ import {
   Vector3,
   MeshBasicMaterial,
   PlaneGeometry,
-  Euler,
   Quaternion
 } from 'three';
 
@@ -51,19 +50,25 @@ const cubeMaterials = [
   0x0000ff,
   0x00ff77
 ].map(color => new MeshBasicMaterial({ color }));
+const faceScale = 1 / 3;
 
 class CubeFace extends Object3D {
-  centerColor: number;
-  mesh: Mesh;
+  subFaces: Mesh[] = [];
 
-  constructor(centerColor: number) {
+  constructor(public centerColor: number) {
     super();
 
-    this.centerColor = centerColor;
+    this.scale.setScalar(faceScale);
 
-    const material = cubeMaterials[centerColor];
-    this.mesh = new Mesh(planeGeometry, material);
-    this.add(this.mesh);
+    for (let y = -1; y <= 1; y++) {
+      for (let x = -1; x <= 1; x++) {
+        const material = cubeMaterials[Math.floor(6 * Math.random())];
+        const mesh = new Mesh(planeGeometry, material);
+        mesh.position.set(x, y, 0);
+        this.subFaces.push(mesh);
+      }
+    }
+    this.add(...this.subFaces);
   }
 }
 
