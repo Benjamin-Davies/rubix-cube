@@ -62,7 +62,7 @@ class CubeFace extends Object3D {
 
     for (let y = -1; y <= 1; y++) {
       for (let x = -1; x <= 1; x++) {
-        const material = cubeMaterials[Math.floor(6 * Math.random())];
+        const material = cubeMaterials[centerColor];
         const mesh = new Mesh(planeGeometry, material);
         mesh.position.set(x, y, 0);
         this.subFaces.push(mesh);
