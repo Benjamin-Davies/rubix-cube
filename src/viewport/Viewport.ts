@@ -39,7 +39,7 @@ class Viewport {
     this.renderer.setViewport(0, 0, width, height);
 
     this.camera = new PerspectiveCamera(40, width / height, 0.1, 1000);
-    this.camera.position.z = 5;
+    this.camera.position.z = 3;
   };
 
   private draw = () => {

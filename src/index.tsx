@@ -8,7 +8,7 @@ import CubeScene from './scene/CubeScene';
 import { CubeState } from './state';
 
 const scene = new CubeScene();
-let state = CubeState.colorsTest;
+let state = CubeState.initial;
 scene.setState(state);
 
 ReactDOM.render(
