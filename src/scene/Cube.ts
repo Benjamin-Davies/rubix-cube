@@ -51,11 +51,11 @@ class Cube extends Object3D {
 const planeGeometry = new PlaneGeometry();
 const cubeMaterials = [
   0xff0000,
-  0xff7700,
+  0xffbb00,
   0xffff00,
   0xffffff,
   0x0000ff,
-  0x00ff77
+  0x00bb33
 ].map(color => new MeshBasicMaterial({ color }));
 const faceScale = 1 / 3;
 
