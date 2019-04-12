@@ -31,8 +31,12 @@ export class FaceState {
 export class CubeState {
   constructor(public readonly faces: FaceState[]) {}
 
-  withMove(move: Move) {
+  move(move: Move) {
     return executeMove(this, move);
+  }
+
+  randomMove(): CubeState {
+    throw new Error('Method not implemented.');
   }
 
   static initial = new CubeState(
