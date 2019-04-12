@@ -5,8 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { SceneContext } from './scene';
 import CubeScene from './scene/CubeScene';
+import { CubeState } from './state';
 
 const scene = new CubeScene();
+let state = CubeState.colorsTest;
+scene.setState(state);
 
 ReactDOM.render(
   <SceneContext.Provider value={scene}>

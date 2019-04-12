@@ -6,6 +6,7 @@ import {
   PlaneGeometry,
   Quaternion
 } from 'three';
+import { CubeState, FaceState } from '../state';
 
 const unitZ = new Vector3(0, 0, 1);
 const faceNormals = [
@@ -39,6 +40,12 @@ class Cube extends Object3D {
 
     this.add(...this.faces);
   }
+
+  setState(state: CubeState) {
+    state.faces.forEach((faceState, i) => {
+      this.faces[i].setState(faceState);
+    });
+  }
 }
 
 const planeGeometry = new PlaneGeometry();
@@ -60,15 +67,21 @@ class CubeFace extends Object3D {
 
     this.scale.setScalar(faceScale);
 
+    const material = cubeMaterials[centerColor];
     for (let y = -1; y <= 1; y++) {
       for (let x = -1; x <= 1; x++) {
-        const material = cubeMaterials[centerColor];
         const mesh = new Mesh(planeGeometry, material);
         mesh.position.set(x, y, 0);
         this.subFaces.push(mesh);
       }
     }
     this.add(...this.subFaces);
+  }
+
+  setState(state: FaceState) {
+    state.subFaceColors.forEach((color, i) => {
+      this.subFaces[i].material = cubeMaterials[color];
+    });
   }
 }
 

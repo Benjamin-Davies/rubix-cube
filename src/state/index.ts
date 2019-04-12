@@ -9,18 +9,6 @@ export enum CubeFaces {
   Right = 5
 }
 
-export class CubeState {
-  constructor(public readonly faces: FaceState[]) {}
-
-  withMove(move: Move) {
-    return executeMove(this, move);
-  }
-
-  static initial = Array(6)
-    .fill(null)
-    .map((_, i) => FaceState.singleColor(i));
-}
-
 export class FaceState {
   constructor(public readonly subFaceColors: CubeFaces[]) {}
 
@@ -32,4 +20,26 @@ export class FaceState {
   static singleColor(color: CubeFaces) {
     return new FaceState(Array(9).fill(color));
   }
+
+  static colorsTest = new FaceState(
+    Array(9)
+      .fill(null)
+      .map((_, i) => i % 6)
+  );
+}
+
+export class CubeState {
+  constructor(public readonly faces: FaceState[]) {}
+
+  withMove(move: Move) {
+    return executeMove(this, move);
+  }
+
+  static initial = new CubeState(
+    Array(6)
+      .fill(null)
+      .map((_, i) => FaceState.singleColor(i))
+  );
+
+  static colorsTest = new CubeState(Array(6).fill(FaceState.colorsTest));
 }
